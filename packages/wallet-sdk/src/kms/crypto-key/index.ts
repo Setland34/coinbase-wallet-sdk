@@ -9,22 +9,22 @@ export type P256KeyPair = {
   publicKey: PublicKey.PublicKey;
 };
 
-/////////////////////////////////////////////////////////////////////////////////////////////
+// *****************************************************************
 // Constants
-/////////////////////////////////////////////////////////////////////////////////////////////
+// *****************************************************************
 export const STORAGE_SCOPE = 'cbwsdk';
 export const STORAGE_NAME = 'keys';
 
 export const ACTIVE_ID_KEY = 'activeId';
 
-/////////////////////////////////////////////////////////////////////////////////////////////
+// *****************************************************************
 // Storage
-/////////////////////////////////////////////////////////////////////////////////////////////
+// *****************************************************************
 export const storage = createStorage(STORAGE_SCOPE, STORAGE_NAME);
 
-/////////////////////////////////////////////////////////////////////////////////////////////
+// *****************************************************************
 // Functions
-/////////////////////////////////////////////////////////////////////////////////////////////
+// *****************************************************************
 export async function generateKeyPair(): Promise<P256KeyPair> {
   const keypair = await WebCryptoP256.createKeyPair({ extractable: false });
   const publicKey = Hex.slice(PublicKey.toHex(keypair.publicKey), 1);
@@ -67,9 +67,6 @@ async function getAccount(): Promise<WebAuthnAccount> {
    */
   const publicKey = Hex.slice(PublicKey.toHex(keypair.publicKey), 1);
 
-  /**
-   * signer
-   */
   const sign = async (payload: Hex.Hex) => {
     const { payload: message, metadata } = WebAuthnP256.getSignPayload({
       challenge: payload,
